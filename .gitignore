@@ -1,6 +1,4 @@
 /node_modules
 /bower_components
 npm-debug.log
-gulpfile.js
-nodemon.js
 /.sass-cache
