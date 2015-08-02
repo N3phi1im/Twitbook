@@ -1,6 +1,24 @@
 var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+var passport = require('passport');
+
+// Require models
+
+require('./models/user');
+require('./models/post');
+require('./config/passport');
+
+// Connect mongoose server
+
+mongoose.connect('mongodb://localhost/twitbook');
+
+// Routing
+
+var userRoute = require('./routes/userRoute');
+var postRoute = require('./routes/PostRoutes');
+
 var app = express();
 var port = process.env.PORT || 3000;
 
@@ -19,31 +37,16 @@ app.set('view options', {
 //middleware that allows for us to parse JSON and UTF-8 from the body of an HTTP request
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+app.use(passport.initialize());
 
 app.get('/', function(req, res) {
 	res.render('index');
 });
 
+app.use('/', postRoute);
+app.use('/api/Users', userRoute);
+
 var server = app.listen(port, function() {
 	var host = server.address().address;
 	console.log("Server Connected");
 });
-
-console.log("HEllo");
-// var delay;
-
-// delay = function(ms, cb) {
-//   return setTimeout(cb, ms);
-// };
-
-// process.once('SIGUSR2', function() {
-//   console.log('Doing shutdown tasks...');
-//   return delay(5000, function() {
-//     console.log('All done, exiting');
-//     return process.kill(process.pid, 'SIGUSR2');
-//   });
-// });
-
-// delay(99999999, function() {
-//   return console.log('App exiting naturally');
-// });

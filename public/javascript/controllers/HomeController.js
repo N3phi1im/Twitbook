@@ -1,12 +1,12 @@
 (function() {
 	'use strict';
 	angular.module('app')
-	.controller('HomeController', HomeController);
+	.controller('homeController', homeController);
 
-	HomeController.$inject = [];
+	homeController.$inject = [];
 
-	function HomeController() {
+	function homeController() {
 		var vm = this;
-		vm.title = 'This is amazing!';
+		
 	}
 })();

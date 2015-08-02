@@ -1,12 +1,21 @@
 (function() {
 	'use strict';
-	angular.module('app', ['ui.router'])
+	angular.module('app', ['ui.router', 'ui.bootstrap'])
 	.config(Config);
 	Config.$inject = ['$stateProvider', '$urlRouterProvider'];
 	function Config($stateProvider, $urlRouterProvider) {
 		$stateProvider.state('Home',{
-			url: '/',
+			url: '/home',
 			templateUrl: 'views/home.html'
+		}).state('Login',{
+			url: '/',
+			templateUrl: 'views/login.html'
+		}).state('Profile',{
+			url: '/Profile',
+			templateUrl: 'views/profile.html'
+		}).state('Register',{
+			url: '/Register',
+			templateUrl: 'views/register.html'
 		});
 		$urlRouterProvider.otherwise('/');
 	}
