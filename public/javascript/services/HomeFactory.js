@@ -11,6 +11,7 @@
 		o.postPost = postPost;
 		o.deletePost = deletePost;
 		o.getPost = getPost;
+		getPosts();
 		return o;
 
 		function postPost(post) {
@@ -48,6 +49,5 @@
 				}
 			});
 		}
-		getPosts();
 	}
 })();

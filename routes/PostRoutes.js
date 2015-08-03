@@ -15,7 +15,7 @@ router.param('post', function(req, res, next, id) {
 	});
 });
 
-router.post('/v1/api/deleteTask/:post', function(req, res, next) {
+router.post('/v1/api/deletePost/:post', function(req, res, next) {
 	Post.update({_id : req.post._id}, {dateDeleted: new Date()}, function(err) {
 		if(err) return next(err);
 		else res.send("You have deleted the Post.");
@@ -44,14 +44,6 @@ router.post('/v1/api/Post', function(req, res, next) {
 		res.send({id: post._id});
 	});
 });
-
-router.post('/v1/api/completeTask/:post', function(req, res, next) {
-	Post.update({_id:req.post._id}, {dateCompleted: new Date()}, function(err) {
-		if(err) return next(err);
-		else res.send("Success");
-	});
-});
-
 
 router.use(function(err, req, res, next) {
 	res.status(400).send(err);

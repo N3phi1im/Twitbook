@@ -9,7 +9,11 @@ var PostSchema = new mongoose.Schema({
 		type: Date,
 		default: null
 	},
-	dateCreated: Date
+	dateCreated: Date,
+	username: {
+		type: String,
+		required: true
+	}
 });
 
 mongoose.model('Post', PostSchema);
