@@ -2,88 +2,31 @@
 	<div class="row">
 		<div class="col-md-2">
 			<dl>
-				<dt>
-					*USERNAME*
+				<dt class='cap' ng-controller="loginController as lg">
+					{{lg.status.username}}
 				</dt>
-				<dd>
-					A description list is perfect for defining terms.
-				</dd>
-				<dt>
-					Euismod
-				</dt>
+				<br>
 				<dd>
 					Vestibulum id ligula porta felis euismod semper eget lacinia odio sem nec elit.
-				</dd>
-				<dd>
-					Donec id elit non mi porta gravida at eget metus.
-				</dd>
-				<dt>
-					Malesuada porta
-				</dt>
-				<dd>
-					Etiam porta sem malesuada magna mollis euismod.
-				</dd>
-				<dt>
-					Felis euismod semper eget lacinia
-				</dt>
-				<dd>
-					Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
 				</dd>
 			</dl>
 		</div>
 		<div class="col-md-1">
 		</div>
 		<div class="col-md-6">
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h3 class="panel-title">
-						Panel title
-					</h3>
-				</div>
-				<div class="panel-body">
-					Panel content
-				</div>
-				<div class="panel-footer">
-					Panel footer
-				</div>
-			</div>
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h3 class="panel-title">
-						Panel title
-					</h3>
-				</div>
-				<div class="panel-body">
-					Panel content
-				</div>
-				<div class="panel-footer">
-					Panel footer
-				</div>
-			</div>
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h3 class="panel-title">
-						Panel title
-					</h3>
-				</div>
-				<div class="panel-body">
-					Panel content
-				</div>
-				<div class="panel-footer">
-					Panel footer
-				</div>
-			</div>
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h3 class="panel-title">
-						Panel title
-					</h3>
-				</div>
-				<div class="panel-body">
-					Panel content
-				</div>
-				<div class="panel-footer">
-					Panel footer
+			<div ng-repeat="post in vm.posts">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">
+							{{post.username}}
+						</h3>
+					</div>
+					<div class="panel-body">
+						{{post.content}}
+					</div>
+					<div class="panel-footer righttext">
+						{{post.dateCreated | date: 'short'}}
+					</div>
 				</div>
 			</div>
 		</div>

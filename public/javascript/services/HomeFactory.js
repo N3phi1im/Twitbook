@@ -24,13 +24,13 @@
 				q.reject(res);
 			});
 			return q.promise;
-		};
+		}
 
 		function deletePost(post) {
 			$http.post('/v1/api/deletePost/' + post._id).success(function(res) {
 				o.posts.splice(o.posts.indexOf(post), 1);
 			});
-		};
+		}
 
 		function getPost(id) {
 			var q = $q.defer();
@@ -38,7 +38,7 @@
 				q.resolve(res);
 			});
 			return q.promise;
-		};
+		}
 
 		function getPosts() {
 			$http.get('/v1/api/Post').success(function(res) {
@@ -48,6 +48,6 @@
 				}
 			});
 		}
-		getTasks();
+		getPosts();
 	}
 })();

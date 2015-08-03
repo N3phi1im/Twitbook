@@ -6,9 +6,9 @@ var jwt = require('express-jwt');
 
 var auth = jwt({secret: 'catsinhats', userProperty: 'payload'});
 
-//post : /v1/api/deleteTask/5
+
 router.param('post', function(req, res, next, id) {
-	Post.find({_id: id}).populate('comments.user', 'username').exec(function(err, posts) {
+	Post.find({_id: id}).populate('username').exec(function(err, posts) {
 		if(err) return next(err);
 		req.post = posts[0];
 		next();
@@ -37,9 +37,9 @@ router.get('/v1/api/Post/:post', function(req, res, next) {
 });
 
 router.post('/v1/api/Post', function(req, res, next) {
-	var createdTask = new Post(req.body);
-	createdTask.dateCreated = new Date();
-	createdTask.save(function(err, post) {
+	var createdPost = new Post(req.body);
+	createdPost.dateCreated = new Date();
+	createdPost.save(function(err, post) {
 		if(err) return next(err);
 		res.send({id: post._id});
 	});

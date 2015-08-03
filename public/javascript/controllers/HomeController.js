@@ -3,10 +3,11 @@
 	angular.module('app')
 	.controller('homeController', homeController);
 
-	homeController.$inject = [];
+	homeController.$inject = ['HomeFactory'];
 
-	function homeController() {
+	function homeController(HomeFactory) {
 		var vm = this;
-		
+		vm.posts = HomeFactory.posts;
+		console.log(vm.posts);
 	}
 })();

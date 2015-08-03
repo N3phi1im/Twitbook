@@ -3,9 +3,9 @@
 	angular.module('app')
 	.controller('indexController', indexController);
 
-	indexController.$inject = ["$modal"];
+	indexController.$inject = ["$modal", "$dialogs"];
 
-	function indexController($modal) {
+	function indexController($modal, $dialogs) {
 		var ix = this;
 
 		// Right Hand Menu Dropdown 
@@ -18,16 +18,5 @@
 			$event.stopPropagation();
 			ix.status.isopen = !ix.status.isopen;
 		};
-
-		// Modal for Post Button
-
-		ix.open = function (size) {
-
-			var modalInstance = $modal.open({
-				animation: true,
-				templateUrl: 'views/myModalContent.html',
-				controller: 'myModalController',
-			});
-		};
 	}
-})(); 
+})();

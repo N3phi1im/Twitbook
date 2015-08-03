@@ -1,6 +1,6 @@
 (function () {
     'use strict';
-    angular.module('app', ['ui.router', 'ui.bootstrap']).config(Config);
+    angular.module('app', ['ui.router', 'ui.bootstrap', 'dialogs']).config(Config);
     Config.$inject = ['$stateProvider', '$urlRouterProvider'];
 
     function Config($stateProvider, $urlRouterProvider) {
@@ -26,20 +26,21 @@
     'use strict';
     angular.module('app').controller('homeController', homeController);
 
-    homeController.$inject = [];
+    homeController.$inject = ['HomeFactory'];
 
-    function homeController() {
+    function homeController(HomeFactory) {
         var vm = this;
-
+        vm.posts = HomeFactory.posts;
+        console.log(vm.posts);
     }
 })();
 (function () {
     'use strict';
     angular.module('app').controller('indexController', indexController);
 
-    indexController.$inject = ["$modal"];
+    indexController.$inject = ["$modal", "$dialogs"];
 
-    function indexController($modal) {
+    function indexController($modal, $dialogs) {
         var ix = this;
 
         // Right Hand Menu Dropdown 
@@ -52,19 +53,9 @@
             $event.stopPropagation();
             ix.status.isopen = !ix.status.isopen;
         };
-
-        // Modal for Post Button
-
-        ix.open = function (size) {
-
-            var modalInstance = $modal.open({
-                animation: true,
-                templateUrl: 'views/myModalContent.html',
-                controller: 'myModalController',
-            });
-        };
     }
 })();
+
 (function () {
     'use strict';
     angular.module('app').controller('loginController', loginController);
@@ -98,22 +89,58 @@
 })();
 (function () {
     'use strict';
-    angular.module('app').controller('myModalController', myModalController);
+    angular.module('app').controller('ModalCtrl', ModalCtrl);
 
-    myModalController.$inject = ["$modal"];
+    ModalCtrl.$inject = ['$modal', 'HomeFactory'];
 
-    function myModalController($modalInstance, items) {
-        var vm = this;
+    function ModalCtrl($modal, HomeFactory) {
+        var mc = this;
+        mc.post = {};
+        mc.open = function () {
+            var $modalInstance = $modal.open({
+                templateUrl: 'views/modal.html',
+                controller: 'ModalInstanceCtrl',
+                resolve: {
+                    params: function () {
+                        return {
+                            key: 'value',
+                            key2: 'value2'
+                        };
+                    }
+                }
+            });
+            $modalInstance.result.then(
 
-        vm.ok = function () {
-            $modalInstance.close();
+            function (result) {
+                mc.post.content = result;
+                HomeFactory.postPost(mc.post);
+                console.log(mc.post);
+            }, function (result) {
+                console.log('called $modalInstance.dismiss()');
+            });
         };
-
-        vm.cancel = function () {
-            $modalInstance.dismiss('cancel');
-        }
     }
 })();
+
+(function () {
+    'use strict';
+    angular.module('app').controller('ModalInstanceCtrl', ModalInstanceCtrl);
+
+    ModalInstanceCtrl.$inject = ['$modal'];
+
+    function ModalInstanceCtrl($modal, $modalInstance) {
+        var mc = this;
+
+        mc.ok = function () {
+            $modalInstance.close('this is result for close');
+        };
+
+        mc.cancel = function () {
+            $modalInstance.dismiss('this is result for dismiss');
+        };
+    }
+})();
+
 (function () {
     'use strict';
     angular.module('app').factory('HomeFactory', HomeFactory);
@@ -139,13 +166,13 @@
                 q.reject(res);
             });
             return q.promise;
-        };
+        }
 
         function deletePost(post) {
             $http.post('/v1/api/deletePost/' + post._id).success(function (res) {
                 o.posts.splice(o.posts.indexOf(post), 1);
             });
-        };
+        }
 
         function getPost(id) {
             var q = $q.defer();
@@ -153,7 +180,7 @@
                 q.resolve(res);
             });
             return q.promise;
-        };
+        }
 
         function getPosts() {
             $http.get('/v1/api/Post').success(function (res) {
@@ -163,7 +190,7 @@
                 }
             });
         }
-        getTasks();
+        getPosts();
     }
 })();
 (function () {
